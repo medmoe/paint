@@ -1,8 +1,11 @@
-import React from "react";
+import React, {MouseEventHandler} from "react";
 
-const Col = () => {
+interface iProps {
+    mouse_down: MouseEventHandler;
+}
+const Col: React.FC<iProps> = ({mouse_down}) => {
     return (
-        <td></td>
+        <td onMouseDown={mouse_down}></td>
     );
 }
 

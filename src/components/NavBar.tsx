@@ -1,10 +1,10 @@
-import React, {useState} from "react";
+import React, {MouseEvent, useState} from "react";
 import Table from "./Table";
 
 const NavBar = () => {
     const [row, setRow] = useState(0)
     const [col, setCol] = useState(0)
-    const [color, setColor] = useState('#000000')
+    const [color, setColor] = useState('#FFFFFF')
 
     const addCol = () => {
         if (row === 0){
@@ -35,10 +35,23 @@ const NavBar = () => {
         }
     };
     const fillCells = () => {
-
+        const cells = document.getElementsByTagName('td');
+        for (let i = 0; i < cells.length; i++){
+            cells[i].style.backgroundColor = color;
+        }
     }
-    const handleChange = (event: React.ChangeEvent<any>) => {
+    const clearCells = () => {
+        const cells = document.getElementsByTagName('td');
+        for (let i = 0; i < cells.length; i++){
+            cells[i].style.backgroundColor = "#FFFFFF"
+        }
+    }
+    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setColor(event.target.value)
+    }
+
+    const mouse_down = (event: MouseEvent<HTMLElement>) => {
+        event.currentTarget.style.backgroundColor = color
     }
 
     return (
@@ -50,6 +63,7 @@ const NavBar = () => {
                 <button onClick={delRow}>delete row</button>
                 <button onClick={delCol}>delete column</button>
                 <button onClick={fillCells}>fill</button>
+                <button onClick={clearCells}>clear</button>
                 <label>
                     select color
                     <select name='colors' id='colors' onChange={handleChange}>
@@ -60,7 +74,7 @@ const NavBar = () => {
                 </label>
             </div>
             <div>
-                <Table rows={row} cols={col}/>
+                <Table rows={row} cols={col} mouse_down={mouse_down}/>
             </div>
         </div>
     );
